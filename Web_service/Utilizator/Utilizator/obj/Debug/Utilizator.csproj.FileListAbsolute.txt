@@ -1,0 +1,10 @@
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\bin\Debug\Utilizator.exe.config
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\bin\Debug\Utilizator.exe
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\bin\Debug\Utilizator.pdb
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\obj\Debug\Utilizator.csprojAssemblyReference.cache
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\obj\Debug\Utilizator.Form1.resources
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\obj\Debug\Utilizator.Properties.Resources.resources
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\obj\Debug\Utilizator.csproj.GenerateResource.cache
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\obj\Debug\Utilizator.csproj.CoreCompileInputs.cache
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\obj\Debug\Utilizator.exe
+C:\Users\Bianca\Desktop\Utilizator\Utilizator\obj\Debug\Utilizator.pdb

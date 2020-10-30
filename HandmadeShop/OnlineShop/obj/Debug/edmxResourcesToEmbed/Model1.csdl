@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Code_user" Type="Int32" Nullable="false" />
+    <Property Name="Sum" Type="Double" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Orders_Code_User" FromRole="Orders" ToRole="User" />
+    <NavigationProperty Name="SOrders" Relationship="Self.FK_SOrder_Code_Order" FromRole="Orders" ToRole="SOrder" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Pret" Type="Double" Nullable="false" />
+    <Property Name="NumberOfProducts" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SOrders" Relationship="Self.FK_SOrder_Code_Product" FromRole="Products" ToRole="SOrder" />
+    <NavigationProperty Name="WishLists" Relationship="Self.FK_WishList_Code_product" FromRole="Products" ToRole="WishList" />
+  </EntityType>
+  <EntityType Name="SOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Code_Product" Type="Int32" Nullable="false" />
+    <Property Name="Code_Order" Type="Int32" Nullable="false" />
+    <Property Name="NumberOfProducts" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_SOrder_Code_Order" FromRole="SOrder" ToRole="Orders" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_SOrder_Code_Product" FromRole="SOrder" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Code_User" FromRole="User" ToRole="Orders" />
+    <NavigationProperty Name="WishLists" Relationship="Self.FK_WishList_Code_user" FromRole="User" ToRole="WishList" />
+  </EntityType>
+  <EntityType Name="WishList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Code_user" Type="Int32" Nullable="false" />
+    <Property Name="Code_product" Type="Int32" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_WishList_Code_product" FromRole="WishList" ToRole="Products" />
+    <NavigationProperty Name="User" Relationship="Self.FK_WishList_Code_user" FromRole="WishList" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Orders_Code_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Code_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOrder_Code_Order">
+    <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+    <End Role="SOrder" Type="Self.SOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SOrder">
+        <PropertyRef Name="Code_Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOrder_Code_Product">
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="SOrder" Type="Self.SOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SOrder">
+        <PropertyRef Name="Code_Product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WishList_Code_product">
+    <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WishList">
+        <PropertyRef Name="Code_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WishList_Code_user">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WishList">
+        <PropertyRef Name="Code_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1Entities3" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="SOrders" EntityType="Self.SOrder" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="WishLists" EntityType="Self.WishList" />
+    <AssociationSet Name="FK_Orders_Code_User" Association="Self.FK_Orders_Code_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOrder_Code_Order" Association="Self.FK_SOrder_Code_Order">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="SOrder" EntitySet="SOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOrder_Code_Product" Association="Self.FK_SOrder_Code_Product">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="SOrder" EntitySet="SOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WishList_Code_product" Association="Self.FK_WishList_Code_product">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="WishList" EntitySet="WishLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WishList_Code_user" Association="Self.FK_WishList_Code_user">
+      <End Role="User" EntitySet="Users" />
+      <End Role="WishList" EntitySet="WishLists" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
